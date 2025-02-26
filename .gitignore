@@ -53,3 +53,7 @@ jspm_packages/
 
 # Aider AI Chat
 .aider*
+
+scope_app/public/scope
+scope_app/www/scope.html
+scope_app/public/node_modules
