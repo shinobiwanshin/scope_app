@@ -10,6 +10,9 @@
 		<div id="root"></div>
 		<script>
 			window.csrf_token = "{{ frappe.session.csrf_token }}";
+			if (!window.frappe) window.frappe = {};
+			const bootData = JSON.parse({{boot}});
+			frappe.boot = bootData;
 		</script>
 		<script type="module" src="/src/main.jsx"></script>
 	</body>
