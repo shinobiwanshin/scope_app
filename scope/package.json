@@ -11,9 +11,12 @@
     "copy-html-entry": "cp ../scope_app/public/scope/index.html ../scope_app/www/scope.html"
   },
   "dependencies": {
+    "@radix-ui/themes": "^3.2.1",
+    "@tailwindcss/cli": "^4.0.9",
     "frappe-react-sdk": "^1.10.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
@@ -25,6 +28,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.18",
     "globals": "^15.14.0",
+    "tailwindcss": "^4.0.9",
     "vite": "^6.1.0"
   }
 }
