@@ -6,7 +6,7 @@ import { FrappeProvider, useFrappeAuth } from "frappe-react-sdk";
 import "@radix-ui/themes/styles.css";
 
 function App() {
-  // const { currentUser } = useFrappeAuth();
+  const { currentUser, login, logout, error, isLoading } = useFrappeAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,6 +14,12 @@ function App() {
     event.preventDefault();
     console.log("Username:", username);
     console.log("Password:", password);
+    login({
+      username: username,
+      password: password,
+    }).then((response) => {
+      console.log("Login response:", response);
+    });
   };
 
   const getSiteName = () => {
@@ -29,48 +35,48 @@ function App() {
 
   return (
     <>
-      <FrappeProvider
+      {/* <FrappeProvider
         socketPort={import.meta.env.VITE_SOCKET_PORT}
         siteName={getSiteName()}
-      >
-        {/* <LoginSignup /> */}
-        <div className="login-container">
-          <h2 className="form-title">Log in with</h2>
-          <SocialLogin />
-          <p className="separator">
-            <span>or</span>
-          </p>
-          {/* {currentUser} */}
-          <form action="#" className="login-form" onSubmit={handleSubmit}>
-            <InputField
-              type="email"
-              placeholder="Email address"
-              icon="mail"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <InputField
-              type="password"
-              placeholder="Password"
-              icon="lock"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <a href="#" className="forgot-password-link">
-              Forgot password?
-            </a>
-            <button type="submit" className="login-button">
-              Log In
-            </button>
-          </form>
-          <p className="signup-prompt">
-            Don&apos;t have an account?{" "}
-            <a href="#" className="signup-link">
-              Sign up
-            </a>
-          </p>
-        </div>
-      </FrappeProvider>
+      > */}
+      {/* <LoginSignup /> */}
+      <div className="login-container">
+        <h2 className="form-title">Log in with</h2>
+        <SocialLogin />
+        <p className="separator">
+          <span>or</span>
+        </p>
+        {currentUser}
+        <form action="#" className="login-form" onSubmit={handleSubmit}>
+          <InputField
+            type="email"
+            placeholder="Email address"
+            icon="mail"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <InputField
+            type="password"
+            placeholder="Password"
+            icon="lock"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <a href="#" className="forgot-password-link">
+            Forgot password?
+          </a>
+          <button type="submit" className="login-button">
+            Log In
+          </button>
+        </form>
+        <p className="signup-prompt">
+          Don&apos;t have an account?{" "}
+          <a href="#" className="signup-link">
+            Sign up
+          </a>
+        </p>
+      </div>
+      {/* </FrappeProvider> */}
     </>
   );
 }
