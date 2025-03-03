@@ -65,8 +65,11 @@ function App() {
           <a href="#" className="forgot-password-link">
             Forgot password?
           </a>
-          <button type="submit" className="login-button">
+          <button type="submit" className="login-button" onClick={login}>
             Log In
+          </button>
+          <button type="submit" className="login-button" onClick={logout}>
+            Logout
           </button>
         </form>
         <p className="signup-prompt">
