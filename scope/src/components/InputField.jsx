@@ -1,12 +1,7 @@
 import { useState } from "react";
 
-const InputField = ({ type, placeholder, icon }) => {
-  const [username, setUsername] = useState(""); // State to store the username value
+const InputField = ({ type, placeholder, icon, value, onChange }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
-
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value); // Update the username value
-  };
 
   return (
     <div className="input-wrapper">
@@ -15,8 +10,8 @@ const InputField = ({ type, placeholder, icon }) => {
         placeholder={placeholder}
         className="input-field"
         required
-        value={username} // Bind the input value to the username state
-        onChange={handleUsernameChange} // Call the handleUsernameChange function on input change
+        value={value} // Bind the input value to the passed value prop
+        onChange={onChange} // Call the passed onChange function on input change
       />
       <i className="material-symbols-rounded">{icon}</i>
       {type === "password" && (

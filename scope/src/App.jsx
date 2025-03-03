@@ -1,11 +1,21 @@
-// import "./App.css";
+import React, { useState } from "react";
 import LoginSignup from "./components/Login-Signup/LoginSignup";
 import SocialLogin from "./components/SocialLogin";
 import InputField from "./components/InputField";
-import { FrappeProvider } from "frappe-react-sdk";
+import { FrappeProvider, useFrappeAuth } from "frappe-react-sdk";
 import "@radix-ui/themes/styles.css";
 
 function App() {
+  // const { currentUser } = useFrappeAuth();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Username:", username);
+    console.log("Password:", password);
+  };
+
   const getSiteName = () => {
     if (
       window.frappe?.boot?.versions?.frappe &&
@@ -16,6 +26,7 @@ function App() {
     }
     return import.meta.env.VITE_SITE_NAME;
   };
+
   return (
     <>
       <FrappeProvider
@@ -29,9 +40,22 @@ function App() {
           <p className="separator">
             <span>or</span>
           </p>
-          <form action="#" className="login-form">
-            <InputField type="email" placeholder="Email address" icon="mail" />
-            <InputField type="password" placeholder="Password" icon="lock" />
+          {/* {currentUser} */}
+          <form action="#" className="login-form" onSubmit={handleSubmit}>
+            <InputField
+              type="email"
+              placeholder="Email address"
+              icon="mail"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <InputField
+              type="password"
+              placeholder="Password"
+              icon="lock"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <a href="#" className="forgot-password-link">
               Forgot password?
             </a>
