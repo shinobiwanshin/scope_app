@@ -6,32 +6,34 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=/assets/scope_app/scope/ && yarn copy-html-entry",
-    "lint": "eslint .",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "copy-html-entry": "cp ../scope_app/public/scope/index.html ../scope_app/www/scope.html"
   },
   "dependencies": {
     "@radix-ui/themes": "^3.2.1",
-    "framer-motion": "^12.6.2",
+    "framer-motion": "^11.3.19",
     "frappe-react-sdk": "^1.10.0",
-    "lucide-react": "^0.488.0",
+    "lucide-react": "^0.417.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
-    "react-router-dom": "^7.5.0",
-    "recharts": "^2.15.2"
+    "react-router-dom": "^6.25.1",
+    "recharts": "^2.12.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.19.0",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.18",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
     "globals": "^15.14.0",
+    "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
-    "vite": "^6.1.0"
+    "vite": "^5.3.4"
   }
 }

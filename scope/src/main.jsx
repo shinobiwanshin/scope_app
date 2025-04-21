@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { FrappeProvider } from "frappe-react-sdk";
 import { BrowserRouter } from "react-router-dom";
@@ -15,7 +16,7 @@ const getSiteName = () => {
   return import.meta.env.VITE_SITE_NAME;
 };
 
-createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <FrappeProvider
     socketPort={import.meta.env.VITE_SOCKET_PORT}
     siteName={getSiteName()}
