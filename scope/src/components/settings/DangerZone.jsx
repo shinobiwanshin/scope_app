@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Trash2 } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useFrappeAuth } from "frappe-react-sdk";
 
 const DangerZone = () => {
@@ -18,12 +18,10 @@ const DangerZone = () => {
       transition={{ duration: 0.5, delay: 0.2 }}
     >
       <div className="flex items-center mb-4">
-        <Trash2 className="text-red-400 mr-3" size={24} />
-        <h2 className="text-xl font-semibold text-gray-100">Danger Zone</h2>
+        <LogOut className="text-red-400 mr-3" size={24} />
+        <h2 className="text-xl font-semibold text-gray-100">Logout</h2>
       </div>
-      <p className="text-gray-300 mb-4">
-        Permanently delete your account and all of your content.
-      </p>
+      <p className="text-gray-300 mb-4">Logout from your account.</p>
       <button
         onClick={handleLogout}
         className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-200"

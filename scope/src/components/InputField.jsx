@@ -15,15 +15,15 @@ const InputField = memo(({ type, placeholder, icon, value, onChange }) => {
         value={value} // Bind the input value to the passed value prop
         onChange={onChange} // Call the passed onChange function on input change
       />
-      <i className="material-symbols-rounded">{icon}</i>
-      {type === "password" && (
+      {/* <i className="material-symbols-rounded">{icon}</i> */}
+      {/* {type === "password" && (
         <i
           onClick={() => setIsPasswordShown((prevState) => !prevState)}
           className="material-symbols-rounded eye-icon"
         >
           {isPasswordShown ? "visibility" : "visibility_off"}
         </i>
-      )}
+      )} */}
     </div>
   );
 });
