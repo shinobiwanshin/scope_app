@@ -1,103 +1,108 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import SocialLogin from "./components/SocialLogin";
 import InputField from "./components/InputField";
 import { useFrappeAuth } from "frappe-react-sdk";
-// import Sidebar from "../src/components/common/Sidebar";
-// import { Route, Routes } from "react-router-dom";
-// import OverviewPage from "./pages/OverviewPage";
-// import ProductsPage from "./pages/ProductsPage";
-// import UsersPage from "./pages/UsersPage";
-// import SalesPage from "./pages/SalesPage";
-// import OrdersPage from "./pages/OrdersPage";
-// import AnalyticsPage from "./pages/AnalyticsPage";
-// import SettingsPage from "./pages/SettingsPage";
+import Dashboard from "./Dashboard";
 
 function App() {
-  const { currentUser, login, logout } = useFrappeAuth();
+  const { currentUser, login, logout } = useFrappeAuth(); // Added logout
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const [error, setError] = useState(""); // State to store error messages
+  const [isLoading, setIsLoading] = useState(true); // State to track loading
 
-  const handleSubmit = (event) => {
+  // Dynamically add/remove the "login-page" class to <body>
+  useEffect(() => {
+    if (!currentUser) {
+      document.body.classList.add("login-page");
+    } else {
+      document.body.classList.remove("login-page");
+    }
+    setIsLoading(false); // Authentication check is complete
+    return () => {
+      document.body.classList.remove("login-page");
+    };
+  }, [currentUser]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    login({
-      username: username,
-      password: password,
-    }).then((response) => {
+    setError(""); // Clear any previous error messages
+
+    try {
+      const response = await login({
+        username: username,
+        password: password,
+      });
       console.log("Login response:", response);
-      navigate("/overview");
-    });
+    } catch (err) {
+      console.error("Login failed:", err);
+      setError("Invalid username or password. Please try again."); // Set error message
+    }
   };
 
-  // const getSiteName = () => {
-  //   if (
-  //     window.frappe?.boot?.versions?.frappe &&
-  //     (window.frappe.boot.versions.frappe.startsWith("15") ||
-  //       window.frappe.boot.versions.frappe.startsWith("16"))
-  //   ) {
-  //     return window.frappe?.boot?.sitename ?? import.meta.env.VITE_SITE_NAME;
-  //   }
-  //   return import.meta.env.VITE_SITE_NAME;
-  // };
-  // return (
-  //   <div className="tailwind-enabled flex h-screen bg-gray-900 text-gray-100 overflow-hidden">
-  //     {/* BG */}
-  //     <div className="fixed inset-0 z-0">
-  //       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800 opacity-80" />
-  //       <div className="absolute inset-0 backdrop-blur-sm" />
-  //     </div>
+  const handleLogout = () => {
+    logout(); // Log the user out
+  };
 
-  //     <Sidebar />
-  //     <Routes>
-  //       <Route path="/overview" element={<OverviewPage />} />
-  //       <Route path="/products" element={<ProductsPage />} />
-  //       <Route path="/users" element={<UsersPage />} />
-  //       <Route path="/sales" element={<SalesPage />} />
-  //       <Route path="/orders" element={<OrdersPage />} />
-  //       <Route path="/analytics" element={<AnalyticsPage />} />
-  //       <Route path="/settings" element={<SettingsPage />} />
-  //     </Routes>
-  //   </div>
-  // );
+  if (isLoading) {
+    // Show a loading spinner or placeholder while checking authentication
+    return <div>Loading...</div>;
+  }
+
+  const LoginPage = () => (
+    <div className="login-container">
+      <h2 className="form-title">Log in with</h2>
+      <SocialLogin />
+      <p className="separator">
+        <span>or</span>
+      </p>
+      <form action="#" className="login-form" onSubmit={handleSubmit}>
+        <InputField
+          type="email"
+          placeholder="Email address"
+          icon="mail"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <InputField
+          type="password"
+          placeholder="Password"
+          icon="lock"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {error && <p className="error-message">{error}</p>}{" "}
+        {/* Display error message */}
+        <a href="#" className="forgot-password-link">
+          Forgot password?
+        </a>
+        <button type="submit" className="login-button">
+          Log In
+        </button>
+      </form>
+      <p className="signup-prompt">
+        Don&apos;t have an account?{" "}
+        <a href="#" className="signup-link">
+          Sign up
+        </a>
+      </p>
+    </div>
+  );
+
   return (
-    <>
-      <div className="login-container">
-        <h2 className="form-title">Log in with</h2>
-        <SocialLogin />
-        <p className="separator">
-          <span>or</span>
-        </p>
-        <form action="#" className="login-form" onSubmit={handleSubmit}>
-          <InputField
-            type="email"
-            placeholder="Email address"
-            icon="mail"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <InputField
-            type="password"
-            placeholder="Password"
-            icon="lock"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <a href="#" className="forgot-password-link">
-            Forgot password?
-          </a>
-          <button type="submit" className="login-button">
-            Log In
-          </button>
-        </form>
-        <p className="signup-prompt">
-          Don&apos;t have an account?{" "}
-          <a href="#" className="signup-link">
-            Sign up
-          </a>
-        </p>
-      </div>
-    </>
+    <Routes>
+      {/* Redirect / to the login page */}
+      <Route
+        path="/"
+        element={currentUser ? <Navigate to="/overview" /> : <LoginPage />}
+      />
+      {/* Dashboard route */}
+      <Route
+        path="/*"
+        element={currentUser ? <Dashboard /> : <Navigate to="/" />}
+      />
+    </Routes>
   );
 }
 
