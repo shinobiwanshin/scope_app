@@ -1,7 +1,9 @@
-import { useState } from "react";
+import React, { useState, memo } from "react";
 
-const InputField = ({ type, placeholder, icon, value, onChange }) => {
+const InputField = memo(({ type, placeholder, icon, value, onChange }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
+
+  console.log("InputField rendered with value:", value);
 
   return (
     <div className="input-wrapper">
@@ -24,6 +26,6 @@ const InputField = ({ type, placeholder, icon, value, onChange }) => {
       )}
     </div>
   );
-};
+});
 
 export default InputField;
